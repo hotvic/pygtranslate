@@ -43,11 +43,30 @@ class TranslateResponse(object):
     def set_sentence(self, value):
         self._sentence = value
 
-    def get_dict(self):
-        return self._dict
+#class Dictionary(object):
+#    def __init__(self, value):
+#        self._value = value
+#        self.words = dict()
+#        self._cterm = 0
+#        self._fill() 
+#
+#    def __iter__(self):
+#        return self
+#
+#    def __next__(self):
+#        print(self.words)
+#        if self._cterm > len(self.terms):
+#            raise StopIteration
+#        self._cterm += 1
+#        return self.words[self.terms[self._cterm]]
+#
+#    def _fill(self):
+#        self.terms = self._value[0]['terms']
+#        for t in self.terms:
+#            for i in self._value[0]['entry']:
+#                if i['word'] == t:
+#                    self.words.update({t: i['reverse_translation']})
 
-    def set_dict(self, value):
-        self._dict = value
 
 class Translate(object):
     def __init__(self):
@@ -61,7 +80,7 @@ class Translate(object):
         return self.langs['codes']
 
     def get_lang_name(self, lcode):
-        pass
+        return self.langs['names'][lcode]
        
     def translate(self, lcfrom, lcto, text):
         url = urllib.parse.urlencode({'sl': lcfrom, 'tl': lcto, 'text': text,
@@ -72,4 +91,13 @@ class Translate(object):
         tr = TranslateResponse()
         tr.set_sentence(t['sentences'])
         return tr
-        
+
+#    def getdict(self, lcfrom, lcto, word):
+#        url = urllib.parse.urlencode({'sl': lcfrom, 'tl': lcto, 'text': word,
+#                                     'client': 'j', 'ie': 'UTF-8', 'oe': 'UTF-8'})
+#        self._resp = UrlHandler(self.baseurl + url)
+#        t = json.loads(self._resp.getcontent())
+#        ## Create a new Dictionary object and return it
+#        #print(t)
+#        return Dictionary(t['dict'])
+
