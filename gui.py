@@ -28,6 +28,7 @@ class MainWindow(Gtk.Window):
         # Add main widgets
         self.vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.add(self.vbox)
+        self.set_menu()
         self.set_vbox()
         # Connect main events
         self.connect('destroy', Gtk.main_quit)
@@ -74,7 +75,57 @@ class MainWindow(Gtk.Window):
         self.wbtnr.connect('clicked', self._invert_ft)
         self.wbtntr.connect('clicked', self.cbtranslate, self)
 
+    def set_menu(self):
+        self.agr = Gtk.AccelGroup()
+        self.mbar = Gtk.MenuBar()
+        # Menu widgets
+        # Itens format:
+        # (Widget, callback(or None), Aceel (or None))
+        File = [
+            (Gtk.SeparatorMenuItem(), None, None),
+            (Gtk.ImageMenuItem.new_from_stock(Gtk.STOCK_QUIT, self.agr), Gtk.main_quit, "<Ctrl>Q")
+        ]
+        Help = [
+            (Gtk.ImageMenuItem.new_from_stock(Gtk.STOCK_ABOUT, self.agr), self.cb_about, None)
+        ]
+        # Menu format:
+        # (widget, menu)
+        self.Menus = [
+            (Gtk.MenuItem('File'), self._make_menu(File)),
+            (Gtk.MenuItem("Help"), self._make_menu(Help))
+        ]
+        # Create Menus
+        for m in self.Menus:
+            m[0].set_submenu(m[1])
+            self.mbar.append(m[0])
+        
+        # Add then
+        self.add_accel_group(self.agr)
+        self.vbox.pack_start(self.mbar, False, False, 0)
+
+    def _make_menu(self, menudef):
+        menu = Gtk.Menu()
+        
+        for m in menudef:
+            if m[1] == None and m[2] == None:
+                menu.append(m[0])
+            elif m[2] == None:
+                m[0].connect('activate', m[1])
+                menu.append(m[0])
+            else:
+                key, mod = Gtk.accelerator_parse(m[2])
+                m[0].add_accelerator('activate', self.agr, key, mod, Gtk.AccelFlags.VISIBLE)
+                m[0].connect('activate', m[1])
+                menu.append(m[0])
+        
+        return menu
+
     def _invert_ft(self, button):
         old = self.wcbfrom.get_active_iter()
         self.wcbfrom.set_active_iter(self.wcbto.get_active_iter())
         self.wcbto.set_active_iter(old)
+
+    # Callbacks
+
+    def cb_about(self, button):
+        pass

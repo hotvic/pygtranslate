@@ -4,7 +4,7 @@
               "gu", "hi", "hmn", "hr", "ht", "hu", "id", "is", "it", "iw", "ja", "jw",
               "ka", "km", "kn", "ko", "la", "lo", "lt", "lv", "mk", "mr", "ms", "mt",
               "nl", "no", "pl", "pt", "pt-BR", "ro", "ru", "sk", "sl", "sr", "sv", "sw",
-              "ta", "te", "th", "tl", "tr", "uk", "ur", "vi", "yi", "zh-CN", "zh-TW"],
+              "ta", "te", "th", "tl", "tr", "uk", "ur", "vi", "yi", "zh-CN", "zh-TE"],
     "default_p": ["auto", "en"],
     "names": {
         "auto": "Detect",                   "af": "Afrikaans",         "ar": "Arabic",
